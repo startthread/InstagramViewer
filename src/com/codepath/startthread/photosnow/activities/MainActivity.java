@@ -2,24 +2,21 @@ package com.codepath.startthread.photosnow.activities;
 
 import java.util.ArrayList;
 
-
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.codepath.startthread.photosnow.R;
-import com.codepath.startthread.photosnow.R.id;
-import com.codepath.startthread.photosnow.R.layout;
-import com.codepath.startthread.photosnow.adapters.InstagramPhotosAdapter;
-import com.codepath.startthread.photosnow.models.InstagramPhoto;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
+
+import com.codepath.startthread.photosnow.R;
+import com.codepath.startthread.photosnow.adapters.InstagramPhotosAdapter;
+import com.codepath.startthread.photosnow.models.InstagramPhoto;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
 public class MainActivity extends Activity {
 	private static final String TAG = "MainActivity";
@@ -65,6 +62,7 @@ public class MainActivity extends Activity {
 				
 				try {
 					// data -> [i] -> user -> username
+					// data -> [i] -> user -> profile_picture
 					// data -> [i] -> caption -> text
 					// data -> [i] -> likes -> count
 					// data -> [i] -> images -> standard_resolution -> url
@@ -79,6 +77,8 @@ public class MainActivity extends Activity {
 						InstagramPhoto photo = new InstagramPhoto();
 						
 						photo.username = photoJSON.getJSONObject("user").getString("username");
+						photo.profilePicUrl = photoJSON.getJSONObject("user").getString("profile_picture");
+						
 						//JSONObject captionJSON = photoJSON.getJSONObject("caption");
 						if (!photoJSON.isNull("caption")) {
 							photo.caption = photoJSON.getJSONObject("caption").getString("text");

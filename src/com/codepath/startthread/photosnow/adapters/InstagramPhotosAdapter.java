@@ -48,9 +48,8 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
 		}
 		
 		// set profile pic
-		//viewHolder.profilePic.getLayoutParams().height = photo.height;
-		//viewHolder.profilePic.setImageResource(0);
-		//Picasso.with(getContext()).load(photo.url).into(viewHolder.photo);
+		viewHolder.profilePic.setImageResource(0);
+		Picasso.with(getContext()).load(photo.profilePicUrl).into(viewHolder.profilePic);
 		
 		viewHolder.username.setText(photo.username);
 		viewHolder.likes.setText(photo.likesCount + " " + mLikesString);
