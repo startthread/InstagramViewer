@@ -3,6 +3,10 @@ package com.codepath.startthread.photosnow.adapters;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Typeface;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,13 +57,18 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
 		
 		viewHolder.username.setText(photo.username);
 		viewHolder.likes.setText(photo.likesCount + " " + mLikesString);
-		viewHolder.caption.setText(photo.caption);
+		
+		int color = getContext().getResources().getColor(R.color.instagram_blue);
+		final SpannableString caption = new SpannableString(photo.username + " " + photo.caption);
+		caption.setSpan(new StyleSpan(Typeface.BOLD), 0, photo.username.length(), 0);
+		caption.setSpan(new ForegroundColorSpan(color), 0, photo.username.length(), 0);
+		
+		viewHolder.caption.setText(caption);
 		
 		// set popular photo
 		viewHolder.photo.getLayoutParams().height = photo.height;
 		viewHolder.photo.setImageResource(0);
 		Picasso.with(getContext()).load(photo.url).into(viewHolder.photo);
-		
 		
 		return convertView;
 	}
