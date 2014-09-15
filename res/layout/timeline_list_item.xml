@@ -2,24 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="8dp"
-    android:paddingTop="8dp"
-    android:orientation="vertical" >
+    android:paddingTop="8dp" xmlns:app="http://schemas.android.com/apk/res/com.codepath.startthread.photosnow">
 
-    <LinearLayout
+   <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:paddingLeft="12dp">
+        android:paddingLeft="12dp" >
 
-        <ImageView
+        <com.codepath.startthread.photosnow.views.CircularImageView
             android:id="@+id/ivProfilePic"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:adjustViewBounds="true"
             android:contentDescription="@null"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/ic_launcher"
+            app:border_width="0dp" />
 
         <TextView
             android:id="@+id/tvUsername"
@@ -45,8 +46,8 @@
         android:id="@+id/tvLikes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
         android:drawableStart="@drawable/ic_like_outline"
+        android:gravity="center_vertical"
         android:paddingLeft="12dp"
         android:textColor="@color/instagram_blue"
         android:textStyle="bold"
