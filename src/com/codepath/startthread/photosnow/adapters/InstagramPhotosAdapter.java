@@ -66,7 +66,7 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
 		viewHolder.caption.setText(caption);
 		
 		// set popular photo
-		viewHolder.photo.getLayoutParams().height = photo.height;
+		//viewHolder.photo.getLayoutParams().height = photo.height;
 		viewHolder.photo.setImageResource(0);
 		Picasso.with(getContext()).load(photo.url).into(viewHolder.photo);
 		
