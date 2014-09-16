@@ -15,14 +15,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.startthread.photosnow.R;
-import com.codepath.startthread.photosnow.models.InstagramPhoto;
+import com.codepath.startthread.photosnow.models.InstagramItem;
 import com.squareup.picasso.Picasso;
 
-public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
+public class InstagramPhotosAdapter extends ArrayAdapter<InstagramItem> {
 
 	private String mLikesString;
 	
-	public InstagramPhotosAdapter(Context context, List<InstagramPhoto> photos) {
+	public InstagramPhotosAdapter(Context context, List<InstagramItem> photos) {
 		super(context, R.layout.timeline_list_item, photos);
 		mLikesString = context.getResources().getString(R.string.likes);
 	}
@@ -30,7 +30,7 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		
-		final InstagramPhoto photo = getItem(position);
+		final InstagramItem photo = getItem(position);
 		
 		ViewHolder viewHolder;
 		
@@ -53,7 +53,8 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
 		
 		// set profile pic
 		viewHolder.profilePic.setImageResource(0);
-		Picasso.with(getContext()).load(photo.profilePicUrl).into(viewHolder.profilePic);
+		Picasso.with(getContext()).load(photo.profilePicUrl).resize(800, 800)
+					.centerInside().into(viewHolder.profilePic);
 		
 		viewHolder.username.setText(photo.username);
 		viewHolder.likes.setText(photo.likesCount + " " + mLikesString);
@@ -68,7 +69,8 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
 		// set popular photo
 		//viewHolder.photo.getLayoutParams().height = photo.height;
 		viewHolder.photo.setImageResource(0);
-		Picasso.with(getContext()).load(photo.url).into(viewHolder.photo);
+		Picasso.with(getContext()).load(photo.url).resize(800, 800)
+					.centerInside().into(viewHolder.photo);
 		
 		return convertView;
 	}

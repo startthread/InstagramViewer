@@ -1,6 +1,7 @@
 package com.codepath.startthread.photosnow.activities;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -15,7 +16,7 @@ import android.widget.ListView;
 
 import com.codepath.startthread.photosnow.R;
 import com.codepath.startthread.photosnow.adapters.InstagramPhotosAdapter;
-import com.codepath.startthread.photosnow.models.InstagramPhoto;
+import com.codepath.startthread.photosnow.models.InstagramItem;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -26,7 +27,7 @@ public class MainActivity extends Activity {
 
 	private SwipeRefreshLayout mSwipeContainer;
 
-	private ArrayList<InstagramPhoto> mPhotos = new ArrayList<InstagramPhoto>();
+	private List<InstagramItem> mPhotos = new ArrayList<InstagramItem>();
 	private InstagramPhotosAdapter mPhotosAdapter;
 
 	@Override
@@ -83,47 +84,10 @@ public class MainActivity extends Activity {
 				JSONArray photosJSON;
 
 				try {
-					// data -> [i] -> user -> username
-					// data -> [i] -> user -> profile_picture
-					// data -> [i] -> caption -> text
-					// data -> [i] -> likes -> count
-					// data -> [i] -> images -> standard_resolution -> url
-					// data -> [i] -> images -> standard_resolution -> height
-
 					photosJSON = response.getJSONArray("data");
 
 					mPhotos.clear();
-
-					for (int i = 0; i < photosJSON.length(); i++) {
-						JSONObject photoJSON = photosJSON.getJSONObject(i);
-						InstagramPhoto photo = new InstagramPhoto();
-
-						photo.username = photoJSON.getJSONObject("user")
-								.getString("username");
-						photo.profilePicUrl = photoJSON.getJSONObject("user")
-								.getString("profile_picture");
-
-						// JSONObject captionJSON =
-						// photoJSON.getJSONObject("caption");
-						if (!photoJSON.isNull("caption")) {
-							photo.caption = photoJSON.getJSONObject("caption")
-									.getString("text");
-						}
-
-						JSONObject likesJSON = photoJSON.getJSONObject("likes");
-						if (likesJSON != null) {
-							photo.likesCount = likesJSON.getInt("count");
-						}
-
-						photo.url = photoJSON.getJSONObject("images")
-								.getJSONObject("standard_resolution")
-								.getString("url");
-						photo.height = photoJSON.getJSONObject("images")
-								.getJSONObject("standard_resolution")
-								.getInt("height");
-
-						mPhotos.add(photo);
-					}
+					mPhotos.addAll(InstagramItem.fromJson(photosJSON));
 					mPhotosAdapter.notifyDataSetChanged();
 
 				} catch (JSONException e) {
